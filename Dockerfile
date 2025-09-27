@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Install system dependencies (if needed)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		build-essential \
-		&& rm -rf /var/lib/apt/lists/*
+        build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install
 COPY requirements.txt ./
@@ -25,7 +25,7 @@ ENV APP_MODE=frontend
 
 # Default command: run backend (FastAPI) or frontend (Streamlit) based on APP_MODE
 CMD if [ "$APP_MODE" = "frontend" ]; then \
-		streamlit run frontend/app.py --server.port=8501; \
-	else \
-		uvicorn backend.main:app --host 0.0.0.0 --port 8000; \
-	fi
+        streamlit run frontend/app.py --server.port=8501 --server.address=0.0.0.0; \
+    else \
+        uvicorn backend.main:app --host 0.0.0.0 --port 8000; \
+    fi
